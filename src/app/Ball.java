@@ -16,7 +16,7 @@ public class Ball {
 		isVisible = true;
 		x = 400;
 		y = 400;
-		dy = 1;
+		dy = 3;
 	}
 	
 	public void move() {

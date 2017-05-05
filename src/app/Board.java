@@ -30,6 +30,7 @@ public class Board extends JPanel implements ActionListener{
 	private int playerScore;
 	private int enemyScore;
 	private JButton menuBtn;
+	private Sound sound;
 	private final int DELAY = 10;
 	
 	
@@ -59,6 +60,7 @@ public class Board extends JPanel implements ActionListener{
 		enemyScore = 0;
 		
 //		initBtn();
+		sound = new Sound();
 		
 		timer = new Timer(DELAY, this);
 		timer.start();
@@ -142,8 +144,13 @@ public class Board extends JPanel implements ActionListener{
 	
 	private void updateEnemy() {
 		if(enemy.isVisible()) {
-			enemy.setDx(ball.getDx());
+			if(ball.getX() > enemy.getX()) {
+				enemy.setDx(Plank.PLANK_SPEED);
+			} else { 
+				enemy.setDx(-Plank.PLANK_SPEED);
+			}
 			enemy.move();
+
 		}
 	}
 	
@@ -161,13 +168,23 @@ public class Board extends JPanel implements ActionListener{
 		Random random = new Random();
 		
 		if(r1.intersects(r3)) {
+			try {
+				sound.playSound("sound/108737__branrainey__boing.wav");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			ball.setDy(-ball.getDy());
 			ball.setDx(random.nextInt(2) + 1);
 		}
 		
 		if(r2.intersects(r3)) {
+			try {
+				sound.playSound("sound/108737__branrainey__boing.wav");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			ball.setDy(2);
-			ball.setDx(-2);
+			ball.setDx(-random.nextInt(2) - 1);
 		}
 		
 		// ball with left wall
@@ -194,22 +211,26 @@ public class Board extends JPanel implements ActionListener{
 		
 		// player intersects with left wall
 		if(r1.intersects(-1, 0, 1, 800)) {
+			player.setX(0);
 			player.setDx(-player.getDx());
 		}
 		
 		// player intersects with right wall
 		if(r1.intersects(800, 0, 1, 800)) {
+			player.setX(650);
 			player.setDx(-player.getDx());
 		}
 		
 		// enemy intersects with left wall
 		if(r2.intersects(-1, 0, 1, 800)) {
-			enemy.setDx(-4);
+			enemy.setX(0);
+			enemy.setDx(-Plank.PLANK_SPEED);
 		}
 				
 		// enemy intersects with right wall
 		if(r2.intersects(800, 0, 1, 800)) {
-			enemy.setDx(4);
+			enemy.setX(650);
+			enemy.setDx(Plank.PLANK_SPEED);
 		}
 	}
 	

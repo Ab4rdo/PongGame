@@ -22,7 +22,10 @@ public class Application extends JFrame{
 		setLocationRelativeTo(null);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
+		
+		Sound.playMainSound("sound/808_State_-_Pacific_State.wav");
+		        
 		EventQueue.invokeLater(()->{
 			Application exe = new Application();
 			exe.setVisible(true);
